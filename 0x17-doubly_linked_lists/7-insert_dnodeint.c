@@ -15,15 +15,18 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 	unsigned int index = 0;
 
 	new = malloc(sizeof(dlistint_t));
-		if (new == NULL)
-			return (NULL);
+	if (new == NULL || h == NULL)
+		return (NULL);
 
 	/* set n value of the new node */
 	new->n = n;
 
 	/* if idx is 0, add node at start of list */
 	if (idx == 0)
-		add_dnodeint(h, n);
+	{
+		new = add_dnodeint(h, n);
+		return (new);
+	}
 
 	current = *h;
 	/* move current to next node until the node with index 1 less than idx */
@@ -32,7 +35,6 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 		current = current->next;
 		index++;
 	}
-	printf("Current index: %d\n", index);
 
 	if (index != idx - 1 || !current)
 	{
